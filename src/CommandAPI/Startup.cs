@@ -1,7 +1,6 @@
 using Microsoft.OpenApi.Models;
 using CommandAPI.Data;
 using Microsoft.EntityFrameworkCore;
-
 namespace CommandAPI;
 public class Startup
 {
@@ -16,6 +15,7 @@ public class Startup
         // Add services to the container.
         services.AddDbContext<CommandContext>(options => options.UseNpgsql(Configuration.GetConnectionString("PostgreSqlConnection")));
         services.AddControllers();
+        services.AddScoped<ICommandRepository, CommandRepository>();
         services.AddCors();
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen(c =>
