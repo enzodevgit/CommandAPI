@@ -1,19 +1,25 @@
 using Microsoft.OpenApi.Models;
 using CommandAPI.Data;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 namespace CommandAPI;
 public class Startup
 {
     public IConfiguration Configuration { get; }
-    public Startup(IConfiguration configuration)
-    {
-        Configuration = configuration;
-    }
+    
+    public Startup(IConfiguration configuration) => Configuration = configuration;
 
     public void ConfigureServices(IServiceCollection services)
     {
+        
+        // Build Connection String
+        NpgsqlConnectionStringBuilder builder = new NpgsqlConnectionStringBuilder();
+        builder.ConnectionString = Configuration.GetConnectionString("PostgreSqlConnection");
+        builder.Username = Configuration["UserID"];
+        builder.Password = Configuration["Password"];
+
         // Add services to the container.
-        services.AddDbContext<CommandContext>(options => options.UseNpgsql(Configuration.GetConnectionString("PostgreSqlConnection")));
+        services.AddDbContext<CommandContext>(options => options.UseNpgsql(builder.ConnectionString));
         services.AddControllers();
         services.AddScoped<ICommandRepository, CommandRepository>();
         services.AddCors();
