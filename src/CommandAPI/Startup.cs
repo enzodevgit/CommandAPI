@@ -2,6 +2,7 @@ using Microsoft.OpenApi.Models;
 using CommandAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
+using AutoMapper;
 namespace CommandAPI;
 public class Startup
 {
@@ -21,6 +22,7 @@ public class Startup
         // Add services to the container.
         services.AddDbContext<CommandContext>(options => options.UseNpgsql(builder.ConnectionString));
         services.AddControllers();
+        services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         services.AddScoped<ICommandRepository, CommandRepository>();
         services.AddCors();
         services.AddEndpointsApiExplorer();

@@ -10,7 +10,11 @@ public class CommandRepository : ICommandRepository
     }
     public void CreateCommand(Command cmd)
     {
-        throw new NotImplementedException();
+        if (cmd == null)
+        {
+            throw new NotImplementedException(nameof(cmd));
+        }
+        _context.Commands.Add(cmd);
     }
 
     public void DeleteCommand(Command cmd)
@@ -30,7 +34,7 @@ public class CommandRepository : ICommandRepository
 
     public bool SaveChanges()
     {
-        throw new NotImplementedException();
+        return (_context.SaveChanges() >= 0);
     }
 
     public void UpdateCommand(Command cmd)
