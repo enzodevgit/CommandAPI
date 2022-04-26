@@ -29,7 +29,7 @@ public class CommandRepository : ICommandRepository
 
     public Command GetCommandById(int id)
     {
-        return _context.Commands.FirstOrDefault(x => x.Id == id);
+        return _context.Commands.FirstOrDefault(x => x.Id == id); 
     }
 
     public bool SaveChanges()
