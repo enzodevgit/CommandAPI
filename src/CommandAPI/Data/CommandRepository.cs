@@ -39,6 +39,6 @@ public class CommandRepository : ICommandRepository
 
     public void UpdateCommand(Command cmd)
     {
-        throw new NotImplementedException();
+        //We don't need to do anything here
     }
 }

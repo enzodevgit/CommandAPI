@@ -2,7 +2,7 @@ using Microsoft.OpenApi.Models;
 using CommandAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
-using AutoMapper;
+using Newtonsoft.Json.Serialization;
 namespace CommandAPI;
 public class Startup
 {
@@ -21,7 +21,9 @@ public class Startup
 
         // Add services to the container.
         services.AddDbContext<CommandContext>(options => options.UseNpgsql(builder.ConnectionString));
-        services.AddControllers();
+        services.AddControllers().AddNewtonsoftJson(s => {
+            s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+        });
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         services.AddScoped<ICommandRepository, CommandRepository>();
         services.AddCors();
