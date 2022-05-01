@@ -19,7 +19,11 @@ public class CommandRepository : ICommandRepository
 
     public void DeleteCommand(Command cmd)
     {
-        throw new NotImplementedException();
+        if (cmd == null)
+        {
+            throw new ArgumentNullException(nameof(cmd));
+        }
+        _context.Commands.Remove(cmd);
     }
 
     public IEnumerable<Command> GetAllCommands()
